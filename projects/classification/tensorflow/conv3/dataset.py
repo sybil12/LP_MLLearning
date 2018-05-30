@@ -42,7 +42,7 @@ class ImageData:
         print "self.data type=",type(self.data)
     
     def augment_dataset(self,image,size):
-        distorted_image = tf.image.random_brightness(distorted_image,
+        distorted_image = tf.image.random_brightness(image,
                                                max_delta=63)
         distorted_image = tf.image.random_contrast(distorted_image,
                                              lower=0.2, upper=1.8)
@@ -57,7 +57,7 @@ class ImageData:
         img = tf.image.convert_image_dtype(img, dtype = tf.float32)
         img = tf.random_crop(img,[self.image_size[0],self.image_size[1],3])
         img = tf.image.random_flip_left_right(img)
-        #img = self.augment_dataset(img,self.image_size)
+        img = self.augment_dataset(img,self.image_size)
         return img, label_
 
 
