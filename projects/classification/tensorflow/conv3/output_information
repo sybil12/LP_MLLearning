@@ -1,0 +1,20 @@
+>>python train.py all_shuffle_train.txt
+num of train datas= 900
+data type= <class 'tensorflow.contrib.data.python.ops.dataset_ops.TensorSliceDataset'>
+self.data type= <class 'tensorflow.contrib.data.python.ops.dataset_ops.BatchDataset'>
+x size= (?, 48, 48, 3)
+relu_conv1 size= (?, 23, 23, 12)
+relu_conv2 size= (?, 11, 11, 24)
+relu_conv3 size= (?, 5, 5, 48)
+dense size= (?, 128)
+logits size= (?, 2)
+Ylogits size= (?, 2)
+
+0 iterations,loss= 0.66277 acc= 0.625
+100 iterations,loss= 0.693147 acc= 0.5
+200 iterations,loss= 0.693147 acc= 0.25
+...
+7800 iterations,loss= 0.693147 acc= 0.4375
+7900 iterations,loss= 0.693147 acc= 0.5
+8000 iterations,loss= 0.693147 acc= 0.4375
+...
