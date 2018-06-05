@@ -7,7 +7,7 @@ txtfile = sys.argv[1]
 batch_size = 16
 num_classes = 2
 image_size = (48,48)
-learning_rate = 0.01
+learning_rate = 0.0001
 
 debug=False
 
@@ -27,14 +27,19 @@ if __name__=="__main__":
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
     train_step = tf.train.AdamOptimizer(learning_rate).minimize(cross_entropy)
 
+    saver = tf.train.Saver()
+    in_steps = 100
+    checkpoint_dir = 'checkpoints/'
+
     with tf.Session() as sess:  
         init = tf.global_variables_initializer()
         sess.run(init)  
         steps = 10000  
         for i in range(steps): 
             _,cross_entropy_,accuracy_,batch_images_,batch_labels_ = sess.run([train_step,cross_entropy,accuracy,batch_images,batch_labels])
-            if i % 100 == 0 :
+            if i % in_steps == 0 :
                 print i,"iterations,loss=",cross_entropy_,"acc=",accuracy_
+                saver.save(sess, checkpoint_dir + 'model.ckpt', global_step=i+1)
                 #print "predict=",Ylogits," labels=",batch_labels
 
                 if debug:
