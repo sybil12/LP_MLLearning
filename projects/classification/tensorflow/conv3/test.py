@@ -4,7 +4,7 @@ import sys
 import numpy as np
 import cv2
 
-valpath = "all_shuffle_imgs_train.txt"
+valpath = "all_shuffle_imgs_val.txt"
 modelpath = "checkpoints/model.ckpt-9901"
 
 testsize = 48
@@ -18,15 +18,11 @@ saver.restore(sess,modelpath)
 
 
 f = open(valpath, "r")
-f1 = open('train_wrong.txt' , 'w')
+f1 = open('val_wrong.txt' , 'w')
 val_num = 0
 false_num = 0
-false0 = 0
 false1 = 0
-none = 0
-smile = 0
-
-none = 0
+false0 = 0
 while 1:
     line = f.readline()
     if line:
@@ -45,15 +41,10 @@ while 1:
         else:
             predict = 1
 
-        if int(category)==0:
-            none = none + 1
-        else:
-            smile = smile + 1
-
         if int(category)!=predict:
             false_num = false_num + 1
             #print(predict,line)
-            f1.write(line[0:-1]+" "+ str(predict) +'\n')
+            f1.write(line+" "+ str(predict) +'\n')
             if int(category)==0:
                 false0 = false0 + 1
             else:
@@ -63,6 +54,5 @@ while 1:
         break
 
 
-print("错误率= %.2f%%  ，%d false in %d imgs"%(false_num/val_num*100, false_num, val_num))
-print("不笑误判比例: %.2f%% ，%d false in %d none imgs"%( false0/none*100, false0, none))
-print("微笑误判比例: %.2f%% ，%d false in %d smile imgs"%(false1/smile*100, false1, smile))
+print("错误率= %f  ，%d false in %d imgs"%(false_num/val_num, false_num, val_num))
+print("不笑的误判个数："+str(false0)+"微笑的误判个数:"+str(false1))
